@@ -21,14 +21,15 @@
             color: #333;
         }
         .countdown {
-            font-size: 4em;
-            font-weight: bold;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            color: #007BFF;
-        }
+    font-size: 4em;
+    font-weight: bold;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    color: #007BFF;
+    transition: all 0.5s ease; /* Плавный переход */
+}
         .unit {
             font-size: 0.5em;
             vertical-align: super;
@@ -44,34 +45,42 @@
 
     <script>
         // Set the date we're counting down to
-        const countDownDate = new Date("Nov 11, 2024 00:00:00").getTime();
-
         // Update the countdown every 1 second
-        const x = setInterval(function() {
-            // Get today's date and time
-            const now = new Date().getTime();
+const x = setInterval(function() {
+    // Get today's date and time
+    const now = new Date().getTime();
 
-            // Calculate the distance between now and the count down date
-            const distance = countDownDate - now;
+    // Calculate the distance between now and the count down date
+    const distance = countDownDate - now;
 
-            // Time calculations for days, hours, minutes and seconds
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    // Time calculations for days, hours, minutes and seconds
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            // Display the result in the element with id="countdown"
-            document.getElementById("countdown").innerHTML = days + "<span class='unit'>д</span> " 
-            + hours + "<span class='unit'>ч</span> " 
-            + minutes + "<span class='unit'>м</span> " 
-            + seconds + "<span class='unit'>с</span>";
+    // Create a new countdown string
+    const newCountdown = days + "d <span class='unit'>д</span> " 
+                        + hours + "h <span class='unit'>ч</span> " 
+                        + minutes + "m <span class='unit'>м</span> " 
+                        + seconds + "s <span class='unit'>с</span>";
 
-            // If the countdown is over, display a message
-            if (distance < 0) {
-                clearInterval(x);
-                document.getElementById("countdown").innerHTML = "Countdown Finished!";
-            }
-        }, 1000);
+    // Update the countdown with a small delay for the animation
+    const countdownElement = document.getElementById("countdown");
+    countdownElement.style.opacity = 0; // Скрываем элемент
+
+    setTimeout(() => {
+        countdownElement.innerHTML = newCountdown;
+        countdownElement.style.opacity = 1; // Показываем элемент
+    }, 500); // Время ожидания перед обновлением
+
+    // If the countdown is over, display a message
+    if (distance < 0) {
+        clearInterval(x);
+        countdownElement.innerHTML = "Countdown Finished!";
+    }
+}, 1000);
+
     </script>
 
 </body>
